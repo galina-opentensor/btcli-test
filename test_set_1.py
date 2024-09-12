@@ -38,6 +38,21 @@ def test_check_wallet_list(cr):
     btclitest = BtcliTest(cr)
     btclitest.check_wallet_list()
 
+# Test to run faucet for wallet
+def test_faucet_wallet(cr):
+    btclitest = BtcliTest(cr)
+    btclitest.faucet_wallet()
+
+# Test config set setting
+def test_config_set(cr):
+    btclitest = BtcliTest(cr)
+    btclitest.test_config_set()
+
+# Test config get setting
+def test_config_get(cr):
+    btclitest = BtcliTest(cr)
+    btclitest.test_config_get()
+
 # Test to check wallet balance
 def test_check_wallet_balance(cr):
     btclitest = BtcliTest(cr)
@@ -58,29 +73,38 @@ def test_wallet_overview(cr):
     btclitest = BtcliTest(cr)
     btclitest.wallet_overview()
 
-# Test to check wallet swap
-# def test_check_wallet_swap(cr):
-#     btclitest = BtcliTest(cr)
-#     btclitest.check_wallet_swap()
-
-# Test to run faucet for wallet
-def test_faucet_wallet(cr):
+# Test to create a subnet
+def test_create_subnet(cr):
     btclitest = BtcliTest(cr)
-    btclitest.faucet_wallet()
+    btclitest.create_subnet()
 
-# Test to regenerate coldkey using the mnemonic from the first test
-def test_regen_coldkey(cr, mnemonic_storage):
+# Test to list subnets
+def test_list_subnets(cr):
     btclitest = BtcliTest(cr)
-    
-    # Retrieve the mnemonic from the first test
-    coldkey_mnemonic = mnemonic_storage.get("coldkey_mnemonic")
-    
-    assert coldkey_mnemonic is not None, "Mnemonic not found. Ensure test_create_coldkey runs first."
-    
-    # Regenerate coldkey using the saved mnemonic
-    btclitest.regen_coldkey(coldkey_mnemonic)
+    btclitest.list_subnets()
 
-# Test to remove wallet
-def test_remove_wallet(cr):
+# Test to view subnetwork creation cost
+def test_view_lock_cost(cr):
     btclitest = BtcliTest(cr)
-    btclitest.remove_wallet()
+    btclitest.view_lock_cost()
+
+# Test to display metagraph
+def test_display_metagraph(cr):
+    btclitest = BtcliTest(cr)
+    btclitest.display_metagraph()
+
+# Test to register neuron by recycling TAO tokens
+def test_register_neuron(cr):
+    btclitest = BtcliTest(cr)
+    btclitest.register_neuron()
+
+# Test to register a neuron
+def test_root_register_neuron(cr):
+    btclitest = BtcliTest(cr)
+    btclitest.root_register_neuron()
+
+# Test to list root network members
+def test_list_root_network_members(cr):
+    btclitest = BtcliTest(cr)
+    btclitest.list_root_network_members()
+
