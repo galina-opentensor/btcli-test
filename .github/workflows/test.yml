@@ -1,0 +1,57 @@
+name: BTCLI and Subtensor Setup with Tests
+
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+
+jobs:
+  setup-subtensor-and-btcli:
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.pull_request.labels.*.name, 'test-run')
+
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update &&
+          sudo apt-get install -y clang curl libssl-dev llvm libudev-dev protobuf-compiler cargo
+
+      - name: Install Rust toolchain and targets
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+          rustup target add wasm32-unknown-unknown --toolchain stable-x86_64-unknown-linux-gnu
+          rustup component add rust-src --toolchain stable-x86_64-unknown-linux-gnu
+
+      - name: Clone Subtensor repository
+        run: git clone https://github.com/opentensor/subtensor.git
+
+      - name: Build Subtensor with Cargo
+        working-directory: ${{ github.workspace }}/subtensor
+        run: |
+          cargo build -p node-subtensor --profile production --features pow-faucet
+
+      - name: Run Subtensor localnet script
+        working-directory: ${{ github.workspace }}/subtensor
+        run: ./scripts/localnet.sh
+
+      - name: Clone BTCLI repository
+        run: git clone https://github.com/opentensor/btcli.git
+
+      - name: Install Python dependencies for BTCLI
+        working-directory: ${{ github.workspace }}/btcli
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+          pip install .
+
+      - name: Run BTCLI Tests
+        working-directory: ${{ github.workspace }}/
+        run: |
+          python3 -m pip install pytest
+          pytest -v -s test_set_1.py

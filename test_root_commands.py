@@ -6,8 +6,8 @@ from btcli_test.general import BtcliTest
 # Fixture to initialize the CommandRunner
 @pytest.fixture
 def cr():
-    output = open("/dev/stdout", "a")  # Directing output to stdout for logging
-    return CommandRunner(wd="/Users/galina/repos/btcli-test", output=output)
+    output = open("/dev/stdout", "a")
+    return CommandRunner(output=output)
 
 # Test to register a neuron
 def test_root_register_neuron(cr):

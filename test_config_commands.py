@@ -7,7 +7,7 @@ from btcli_test.general import BtcliTest
 @pytest.fixture
 def cr():
     output = open("/dev/stdout", "a")  # Directing output to stdout for logging
-    return CommandRunner(wd="/Users/galina/repos/btcli-test", output=output)
+    return CommandRunner(output=output)
 
 # Test config set setting
 def test_config_set(cr):
@@ -27,4 +27,4 @@ def test_config_clear(cr):
 # Test config metagraph setting
 def test_config_metagraph(cr):
     btclitest = BtcliTest(cr)
-    btclitest.test_config_metagraph()
+    btclitest.test_config_get()

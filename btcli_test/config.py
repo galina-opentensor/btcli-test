@@ -4,8 +4,8 @@ import os
 # Bittensor network and chain endpoint configuration
 NETWORK = "local"  # Substitute with the actual network if needed
 CHAIN_ENDPOINT = "ws://127.0.0.1:9946"  # Substitute with the actual chain endpoint
-WALLET_NAME = "test-wallet-Charlie"
-WALLET_PATH = "/Users/galina/.bittensor/wallets/"  # Substitute with the actual path to wallets
+WALLET_NAME = "test-wallet-Dave"
+WALLET_PATH = os.path.join(os.getenv('HOME'), '.bittensor', 'wallets') # Substitute with the actual path to wallets
 HOTKEY = "default"  # Substitute with the actual hotkey if needed
 PASSWORD ="Strong!" #Password
 USE_PASSWORD = "--no-use-password" # --use-password   

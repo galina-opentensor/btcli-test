@@ -7,7 +7,7 @@ from btcli_test.general import BtcliTest
 @pytest.fixture
 def cr():
     output = open("/dev/stdout", "a")  # Directing output to stdout for logging
-    return CommandRunner(wd="/Users/galina/repos/btcli-test", output=output)
+    return CommandRunner(output=output)
 
 # Test to create a subnet
 def test_create_subnet(cr):

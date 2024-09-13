@@ -1,13 +1,13 @@
 import pytest
+import os
 from btcli_test.config import WALLET_NAME, WALLET_PATH, HOTKEY, PASSWORD
 from command_runner import CommandRunner
 from btcli_test.general import BtcliTest
 
-# Fixture to initialize the CommandRunner
 @pytest.fixture
 def cr():
     output = open("/dev/stdout", "a")  # Directing output to stdout for logging
-    return CommandRunner(wd="/Users/galina/repos/btcli-test", output=output)
+    return CommandRunner(output=output)
 
 # Fixture to store mnemonic between tests
 @pytest.fixture(scope="session")
