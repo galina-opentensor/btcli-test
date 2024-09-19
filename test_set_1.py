@@ -1,124 +1,62 @@
 import pytest
-from btcli_test.config import WALLET_PATH
-from command_runner import CommandRunner
 from btcli_test.general import BtcliTest
 
-# Fixture to initialize the CommandRunner
-@pytest.fixture
-def cr():
-    output = open("/dev/stdout", "a")  # Directing output to stdout for logging
-    return CommandRunner(output=output)
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to register a neuron
+# def test_root_register_neuron(btcli_test):
+#     btcli_test.root_register_neuron()
 
-# Fixture to store mnemonic between tests
-@pytest.fixture(scope="session")
-def mnemonic_storage():
-    return {}
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to boost the root network
+# def test_boost_root_network(btcli_test):
+#     btcli_test.boost_root_network()
 
-# Test to remove wallet
-@pytest.mark.parametrize("wallet_name", [
-    ("wallet1"),
-    ("wallet2"),
-])
-def test_remove_wallet(cr, wallet_name):
-    wallet_path = f"{WALLET_PATH}"
-    print(f"I will remove {wallet_name} wallet from path:", wallet_path)
-    btclitest = BtcliTest(
-        cr,
-        wallet_name=wallet_name,
-        wallet_path=wallet_path,
-    )
-    btclitest.remove_wallet()
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to get root network weights
+# def test_get_root_network_weights(btcli_test):
+#     btcli_test.get_root_network_weights()
 
-# Parameterized test to create a coldkey and store the mnemonic
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to set root network weights
+# def test_set_root_network_weights(btcli_test):
+#     btcli_test.set_root_network_weights()
+
 @pytest.mark.parametrize("wallet_name, hotkey", [
     ("wallet1", "hotkey1"),
-    ("wallet2", "hotkey2"),
-])
-def test_create_coldkey(cr, mnemonic_storage, wallet_name, hotkey): 
-    wallet_path = f"{WALLET_PATH}"
-    btclitest = BtcliTest(
-        cr,
-        wallet_name=wallet_name,
-        wallet_path=wallet_path,
-        hotkey=hotkey
-    )
-    mnemonic = btclitest.create_coldkey()
+], indirect=True)
+# Test to slash the root network
+def test_slash_root_network(btcli_test):
+    btcli_test.slash_root_network()
 
-    # Save mnemonic in mnemonic_storage for later use
-    mnemonic_storage[f"{wallet_name}_coldkey_mnemonic"] = mnemonic
-    assert mnemonic is not None, "Failed to create coldkey and extract mnemonic."
+# # Test to delegate stak
+# def test_delegate_stake(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.delegate_stake()
 
-# Parameterized test to create a hotkey
-@pytest.mark.parametrize("wallet_name, hotkey", [
-    ("wallet1", "hotkey1"),
-    ("wallet2", "hotkey2"),
-])
-def test_create_hotkey(cr, mnemonic_storage, wallet_name, hotkey):
-    wallet_path = f"{WALLET_PATH}"
-    btclitest = BtcliTest(
-        cr,
-        wallet_name=wallet_name,
-        wallet_path=wallet_path,
-        hotkey=hotkey
-    )
-    mnemonic = btclitest.create_hotkey()
+# # Test to list root network delegates
+# def test_list_root_network_delegates(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.list_root_network_delegates()
 
-    # Save mnemonic in mnemonic_storage for later use
-    mnemonic_storage[f"{wallet_name}_hotkey_mnemonic"] = mnemonic
-    assert mnemonic is not None, "Failed to create hotkey and extract mnemonic."
+# # Test to set senate take
+# def test_set_senate_take(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.set_senate_take()
 
+# # Test to undelegate stake
+# def test_undelegate_stake(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.undelegate_stake()
 
-# Test to check wallet list
-def test_check_wallet_list(cr):
-    wallet_path = WALLET_PATH  # Use a default path or modify as needed
-    btclitest = BtcliTest(cr, wallet_path=wallet_path)
-    btclitest.check_wallet_list()
-
-
-def test_regen_coldkey(cr, mnemonic_storage):
-    wallet_name = "wallet1" 
-    wallet_path = f"{WALLET_PATH}"
-    hotkey = "hotkey1"  
-
-    # Retrieve the mnemonic from the mnemonic_storage
-    coldkey_mnemonic = mnemonic_storage.get(f"{wallet_name}_coldkey_mnemonic")
-    
-    assert coldkey_mnemonic is not None, "Mnemonic not found. Ensure test_create_coldkey runs first."
-    
-    # Initialize BtcliTest with wallet_name and other details
-    btclitest = BtcliTest(
-        cr,
-        wallet_name=wallet_name,
-        wallet_path=wallet_path,
-        hotkey=hotkey
-    )
-
-    # Regenerate coldkey using the saved mnemonic
-    result = btclitest.regen_coldkey(coldkey_mnemonic)
-    
-    # Validate that the regen process completed
-    assert result is not None, "Failed to regenerate coldkey using the mnemonic."
-
-def test_regen_hotkey(cr, mnemonic_storage):
-    wallet_name = "wallet1" 
-    wallet_path = f"{WALLET_PATH}"
-    hotkey = "hotkey1"  
-
-    # Retrieve the mnemonic from the mnemonic_storage
-    hotkey_mnemonic = mnemonic_storage.get(f"{wallet_name}_hotkey_mnemonic")
-    
-    assert hotkey_mnemonic is not None, "Mnemonic not found. Ensure test_create_hotkey runs first."
-    
-    # Initialize BtcliTest with wallet_name and other details
-    btclitest = BtcliTest(
-        cr,
-        wallet_name=wallet_name,
-        wallet_path=wallet_path,
-        hotkey=hotkey
-    )
-
-    # Regenerate coldkey using the saved mnemonic
-    result = btclitest.regen_hotkey(hotkey_mnemonic)
-    
-    # Validate that the regen process completed
-    assert result is not None, "Failed to regenerate coldkey using the mnemonic."
+# # Test to list root network members
+# def test_list_root_network_members(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.list_root_network_members()

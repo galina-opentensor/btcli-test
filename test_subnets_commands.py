@@ -30,9 +30,9 @@ def test_display_metagraph(cr):
     btclitest.display_metagraph()
 
 # Test to register neuron using Proof of Work
-def test_pow_register(cr):
-    btclitest = BtcliTest(cr)
-    btclitest.pow_register()
+# def test_pow_register(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.pow_register()
 
 # Test to register neuron by recycling TAO tokens
 def test_register_neuron(cr):

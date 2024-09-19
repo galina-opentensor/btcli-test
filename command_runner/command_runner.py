@@ -41,12 +41,14 @@ class CommandRunner(object):
         self.print_colored(BLUE, "Executing interactively: ", cmd)
         
         child = pexpect.spawn(cmd, timeout=timeout, encoding='utf-8')
-        
+
         try:
             for prompt, response in prompts_responses.items():
                 index = child.expect([prompt, pexpect.TIMEOUT, pexpect.EOF], timeout=timeout)
-                if index == 0:  # Prompt matched
-                    self.print_colored(CYAN, "Prompt: ", prompt)
+                self.print_colored(CYAN, "Current output before prompt:", child.before.strip())
+            
+                if index == 0:  # Matched prompt
+                    self.print_colored(CYAN, prompt)
                     child.sendline(response)
                 elif index == 1:  # Timeout
                     self.print_colored(RED, "Timeout while waiting for: ", prompt)
@@ -71,5 +73,5 @@ class CommandRunner(object):
 
 
     def print_colored(self, color: str, *inputs):
-        inputs_str = [" ".join(item) if isinstance(item, list) else str(item) for item in inputs]
-        self.output.write(color + " ".join(inputs_str) + REGULAR)
+        inputs_str = " ".join(str(item) for item in inputs)
+        self.output.write(color + inputs_str + REGULAR)
