@@ -1,45 +1,62 @@
 import pytest
-from btcli_test.config import WALLET_NAME, WALLET_PATH, HOTKEY, PASSWORD
-from command_runner import CommandRunner
 from btcli_test.general import BtcliTest
-import os
 
-# Fixture to initialize the CommandRunner
-@pytest.fixture
-def cr():
-    output = open("/dev/stdout", "a")  # Directing output to stdout for logging
-    return CommandRunner(output=output)
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to register a neuron
+# def test_root_register_neuron(btcli_test):
+#     btcli_test.root_register_neuron()
 
-# Fixture to store mnemonic between tests
-@pytest.fixture(scope="session")
-def mnemonic_storage():
-    return {}
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to boost the root network
+# def test_boost_root_network(btcli_test):
+#     btcli_test.boost_root_network()
 
-# test_hello.py
-def test_hello_world():
-    greeting = "Hello, World!"
-    assert greeting == "Hello, World!"
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to get root network weights
+# def test_get_root_network_weights(btcli_test):
+#     btcli_test.get_root_network_weights()
 
-# Test to create a coldkey and store the mnemonic
-def test_create_coldkey(cr, mnemonic_storage):
-    btclitest = BtcliTest(cr)
-    mnemonic = btclitest.create_coldkey()
+# @pytest.mark.parametrize("wallet_name, hotkey", [
+#     ("wallet1", "hotkey1"),
+# ], indirect=True)
+# # Test to set root network weights
+# def test_set_root_network_weights(btcli_test):
+#     btcli_test.set_root_network_weights()
 
-    # Save mnemonic in mnemonic_storage for later use
-    mnemonic_storage["coldkey_mnemonic"] = mnemonic
-    assert mnemonic is not None, "Failed to create coldkey and extract mnemonic."
+@pytest.mark.parametrize("wallet_name, hotkey", [
+    ("wallet1", "hotkey1"),
+], indirect=True)
+# Test to slash the root network
+def test_slash_root_network(btcli_test):
+    btcli_test.slash_root_network()
 
-# Test to create a hotkey
-def test_create_hotkey(cr):
-    btclitest = BtcliTest(cr)
-    btclitest.create_hotkey()
+# # Test to delegate stak
+# def test_delegate_stake(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.delegate_stake()
 
-# Test to check wallet list
-def test_check_wallet_list(cr):
-    btclitest = BtcliTest(cr)
-    btclitest.check_wallet_list()
+# # Test to list root network delegates
+# def test_list_root_network_delegates(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.list_root_network_delegates()
 
-# Test to get wallet overview
-def test_wallet_overview(cr):
-    btclitest = BtcliTest(cr)
-    btclitest.wallet_overview()
+# # Test to set senate take
+# def test_set_senate_take(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.set_senate_take()
+
+# # Test to undelegate stake
+# def test_undelegate_stake(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.undelegate_stake()
+
+# # Test to list root network members
+# def test_list_root_network_members(cr):
+#     btclitest = BtcliTest(cr)
+#     btclitest.list_root_network_members()

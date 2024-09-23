@@ -38,7 +38,7 @@ jobs:
 
       - name: Run Subtensor localnet script
         working-directory: ${{ github.workspace }}/subtensor
-        run: ./scripts/localnet.sh
+        run: BUILD_BINARY=0 ./scripts/localnet.sh
 
       - name: Clone BTCLI repository
         run: git clone https://github.com/opentensor/btcli.git
@@ -54,4 +54,4 @@ jobs:
         working-directory: ${{ github.workspace }}/
         run: |
           python3 -m pip install pytest
-          pytest -v -s test_set_1.py
+          pytest -v -s test_github.py

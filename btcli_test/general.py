@@ -1,6 +1,19 @@
 import pexpect
 import re
-from btcli_test.config import NETWORK, CHAIN_ENDPOINT, WALLET_NAME, WALLET_PATH, HOTKEY, USE_PASSWORD, PASSWORD, NETUID, VALUE, DELEGATE_SS58KEY, AMOUNT, TAKE
+from btcli_test.config import (
+    NETWORK, 
+    CHAIN_ENDPOINT, 
+    WALLET_NAME,
+    WALLET_PATH, 
+    HOTKEY, 
+    USE_PASSWORD, 
+    PASSWORD, 
+    NETUID, 
+    VALUE, 
+    DELEGATE_SS58KEY, 
+    AMOUNT, 
+    TAKE
+)
 from command_runner import CommandRunner
 
 class BtcliTest:
@@ -110,6 +123,7 @@ class BtcliTest:
     # Create subnet
     def create_subnet(self):
         cmd = f"btcli subnets create --wallet-name {WALLET_NAME} --wallet-path {WALLET_PATH} --hotkey {HOTKEY} --network {NETWORK} --subtensor.chain_endpoint {CHAIN_ENDPOINT}"
+        print(cmd)
         child = pexpect.spawn(cmd)
         try:
             child.sendline('y')
@@ -229,6 +243,7 @@ class BtcliTest:
     # Register a root neuron
     def root_register_neuron(self):
         cmd = f"btcli root register --network {NETWORK} --subtensor.chain_endpoint {CHAIN_ENDPOINT} --wallet-name {WALLET_NAME} --wallet-path {WALLET_PATH} --hotkey {HOTKEY}"
+        print(cmd)
         child = pexpect.spawn(cmd)
 
         try:
@@ -250,6 +265,7 @@ class BtcliTest:
     # Boost the root network
     def boost_root_network(self):
         cmd = f"btcli root boost --network {NETWORK} --subtensor.chain_endpoint {CHAIN_ENDPOINT} --wallet-name {WALLET_NAME} --wallet-path {WALLET_PATH} --hotkey {HOTKEY} --netuid {NETUID} --amount {AMOUNT}"
+        print (cmd)
         child = pexpect.spawn(cmd)
 
         try:
