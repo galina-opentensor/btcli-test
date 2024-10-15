@@ -20,7 +20,7 @@ class CommandRunner(object):
         self.output = output
 
     def run(self, cmd: str, ignore_failure=True, timeout=3600) -> str:
-        self.print_colored(BLUE, "Executing: ", cmd)
+        self.print_colored(BLUE, "\nExecuting: ", cmd)
         try:
             result = subprocess.check_output(
                 cmd, shell=True, timeout=timeout
@@ -38,7 +38,7 @@ class CommandRunner(object):
         return output
 
     def run_interactive(self, cmd: str, prompts_responses: dict, timeout=3600) -> str:
-        self.print_colored(BLUE, "Executing interactively: ", cmd)
+        self.print_colored(BLUE, "\nExecuting interactively: ", cmd)
         
         child = pexpect.spawn(cmd, timeout=timeout, encoding='utf-8')
 

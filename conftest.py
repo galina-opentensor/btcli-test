@@ -14,6 +14,11 @@ def cr():
 def mnemonic_storage():
     return {}
 
+# Fixture to store mnemonic between tests
+@pytest.fixture(scope="session")
+def ss58_address_storage():
+    return {}
+
 # Fixture to provide wallet names
 @pytest.fixture
 def wallet_name(request):
